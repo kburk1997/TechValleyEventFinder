@@ -1,95 +1,131 @@
-<!DOCTYPE html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDgxomgvdcC5jDoBwo76X36DhPQ57kqa-E"></script>
-	
-		<script>
-			var map;
-			var infowindow;
-			var request;
-			var service;
-			var markers = [];
+﻿<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDgxomgvdcC5jDoBwo76X36DhPQ57kqa-E"></script>
 
-			function initialize() {
-				var center = new google.maps.LatLng(42.8035432,-74.0081847);
-				map = new google.maps.Map(document.getElementById('map'), {
-					center: center,
-					zoom: 13
-				});
+    <script>
+        var map;
+        var infowindow;
+        var request;
+        var service;
+        var markers = [];
 
-				request = {
-					location: center,
-					radius: 8047,
-					types: ['cafe']
-				};
-				infowindow = new google.maps.InfoWindow();
+        function initialize() {
+            var center = new google.maps.LatLng(42.8035432, -74.0081847);
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: center,
+                zoom: 13
+            });
 
-				service = new google.maps.places.PlacesService(map);
+            request = {
+                location: center,
+                radius: 8047,
+                types: ['cafe']
+            };
+            infowindow = new google.maps.InfoWindow();
 
-				service.nearbySearch(request, callback);
+            service = new google.maps.places.PlacesService(map);
 
-				google.maps.event.addListener(map, 'rightclick', function(event) {
-					map.setCenter(event.latLng);
-					clearResults(markers);
+            service.nearbySearch(request, callback);
 
-					var request = {
-						location: event.latLng,
-						radius: 8047,
-						types: ['cafe', 'restaurant']
-					};
-					service.nearbySearch(request, callback);
-				});
-			}
+            google.maps.event.addListener(map, 'rightclick', function (event) {
+                map.setCenter(event.latLng);
+                clearResults(markers);
 
-			function callback(results, status) {
-				if (status == google.maps.places.PlacesServiceStatus.OK) {
-					for (var i =0; i < results.length; i++) {
-						markers.push(createMarker(results[i]));
-					}
-				}
-			}
+                var request = {
+                    location: event.latLng,
+                    radius: 8047,
+                    types: ['cafe', 'restaurant']
+                };
+                service.nearbySearch(request, callback);
+            });
+        }
 
-			function createMarker(place) {
-				var placeLoc = place.geometry.location;
-				var marker = new google.maps.Marker({
-					map: map,
-					position: place.geometry.location
-				});
+        function callback(results, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    markers.push(createMarker(results[i]));
+                }
+            }
+        }
 
-				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.setContent(place.name);
-					infowindow.open(map, this);
-				});
+        function createMarker(place) {
+            var placeLoc = place.geometry.location;
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
 
-				return marker;
-			}
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent(place.name);
+                infowindow.open(map, this);
+            });
 
-			function clearResults(markers) {
-				for (var m in markers) {
-					markers[m].setMap(null)
-				}
-			}
-			google.maps.event.addDomListener(window, 'load', initialize);
-		</script>
-		<style>
-			html, body, #map {
-				height: 100%;
-				margin: 0px;
-				padding: 0px;
-}
-		</style>
-	</head>
-	<body>
+            return marker;
+        }
+
+        function clearResults(markers) {
+            for (var m in markers) {
+                markers[m].setMap(null)
+            }
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        table {
+            height: 50%;
+            width: 100% margin: 0px;
+            padding: 0px;
+        }
+
+        #map {
+            width: 100% !important;
+            height: 50% !important;
+        }
+    </style>
+</head>
+<body>
+
     <nav class="navbar fixed-top navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Event Finder</a>
-    </nav>	
+        <a class="navbar-brand" href="#">Event Finder</a>
+
+
+
+    </nav>
+    <table>
+
+        <tr>
+            <td>
+
+                <p>  This is the search Area </p>
+
+            </td>
+        </tr>
+
+
+        <tr></tr>
+    </table>
+
+
     <div id="map">
-		</div>
-	</body>
-	
+    </div>
+
+
+
+
+
+
+</body>
+
 </html>

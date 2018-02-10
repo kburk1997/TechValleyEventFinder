@@ -25,7 +25,7 @@
             request = {
                 location: center,
                 radius: 8047,
-                types: ['cafe']
+                types: ['point_of_interest']
             };
             infowindow = new google.maps.InfoWindow();
 
@@ -40,7 +40,7 @@
                 var request = {
                     location: event.latLng,
                     radius: 8047,
-                    types: ['cafe', 'restaurant']
+                    types: ['point_of_interest']
                 };
                 service.nearbySearch(request, callback);
             });
@@ -58,7 +58,8 @@
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
                 map: map,
-                position: place.geometry.location
+                position: place.geometry.location,
+                icon: getMarkerIcon(place.types[0])
             });
 
             google.maps.event.addListener(marker, 'click', function () {
@@ -74,6 +75,114 @@
 
             return marker;
         }
+
+        function getMarkerIcon(placeType) {
+				var fileLoc = "../img/"
+				var fileName;
+				switch (placeType) {
+					case "accounting":
+						fileName = "accountancy.png"
+						break;
+					case "bakery":
+						fileName = "cake-shop.png"
+						break;
+					case "bar":
+						fileName = "bars.png"
+						break;
+					case "book_store":
+						fileName = "books-media.png"
+						break;
+					case "cafe":
+						fileName = "coffee-n-tea.png"
+						break;
+					case "car_dealer":
+						fileName = "automotive.png"
+						break;
+					case "car_rental":
+						fileName = "automotive.png"
+						break;
+					case "car_repair" :
+						fileName = "automotive.png"
+						break;
+					case "car_wash" :
+						fileName = "automotive.png"
+						break;
+					case "gas_station" :
+						fileName = "automotive.png"
+						break;
+					case "electronics_store":
+						fileName = "electronics.png"
+						break;
+					case "library":
+						fileName = "libraries.png"
+						break;
+					case "bank":
+						fileName = "financial-services.png"
+						break;
+					case "atm":
+						fileName = "financial-services.png"
+						break;
+					case "storage":
+						fileName = "shopping.png"
+						break;	
+					case "food":
+						fileName = "shopping.png"
+						break;	
+					case "supermarket":
+						fileName = "shopping.png"
+						break;	
+					case "department_store":
+						fileName = "shopping.png"
+						break;	
+					case "shopping_mall":
+						fileName = "retail-stores.png"
+						break;
+					case "store":
+						fileName = "retail-stores.png"
+						break;
+					case "lodging":
+						fileName = "hotels.png"
+						break;
+					case "airport":
+						fileName = "transport.png"
+						break;	
+					case "restaurant":
+						fileName = "restaurants.png"
+						break;
+					case "movie_theater":
+						fileName = "movies.png"
+						break;
+					case "university":
+						fileName = "schools.png"
+						break;
+					case "school":
+						fileName = "schools.png"
+						break;
+					case "shoe_store":
+						fileName = "retail-stores.png"
+						break;
+					case "home_goods_store":
+						fileName = "home-services.png"
+						break;
+					case "doctor":
+						fileName = "doctors.png"
+						break;
+					case "medical":
+						fileName = "medical.png"
+						break;
+					case "health":
+						fileName = "health-medical.png"
+						break;
+					case "point_of_interest":
+						fileName = "places.png"
+						break;
+					default:
+						return "";
+
+				}
+
+				return fileLoc + fileName;
+			}
 
         function clearResults(markers) {
             for (var m in markers) {
@@ -112,9 +221,13 @@
     <table>
 
         <tr>
-            <td  style="width:65%;">
-              <h3>Filter Attractions</h3>
-                <p>  This is the search Area </p>
+
+            <td>
+                <form action="">
+                    <input type="checkbox" name="vehicle" value="Bike"> Cafe <br>
+                    <input type="checkbox" name="vehicle" value="Car" checked> Restaurant <br>
+                    <input type="submit" value="Submit">
+                </form>
 
             </td>
 

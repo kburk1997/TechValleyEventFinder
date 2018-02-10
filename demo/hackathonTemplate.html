@@ -62,8 +62,13 @@
             });
 
             google.maps.event.addListener(marker, 'click', function () {
+                //debugging
                 //console.log(place);
-                infowindow.setContent('<b>'+place.name+'</b><br>'+place.vicinity);
+                infoContent="<b><a href=\"https://www.google.com/maps/place/"+place.vicinity+"\">"+place.name+"</a></b><br>";
+                placehead=document.getElementById('placename');
+                //console.log(placehead);
+                infoContent+= place.vicinity;
+                infowindow.setContent(infoContent);
                 infowindow.open(map, this);
             });
 
@@ -107,11 +112,12 @@
     <table>
 
         <tr>
-            <td >
-
+            <td  style="width:65%;">
+              <h3>Filter Attractions</h3>
                 <p>  This is the search Area </p>
 
             </td>
+
         </tr>
 
 

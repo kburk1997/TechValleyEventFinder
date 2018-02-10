@@ -62,7 +62,8 @@
             });
 
             google.maps.event.addListener(marker, 'click', function () {
-                infowindow.setContent(place.name);
+                //console.log(place);
+                infowindow.setContent('<b>'+place.name+'</b><br>'+place.vicinity);
                 infowindow.open(map, this);
             });
 
@@ -106,7 +107,7 @@
     <table>
 
         <tr>
-            <td>
+            <td >
 
                 <p>  This is the search Area </p>
 

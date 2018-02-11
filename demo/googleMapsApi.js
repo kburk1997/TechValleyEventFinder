@@ -19,20 +19,6 @@ var map;
             infowindow = new google.maps.InfoWindow();
 
             service = new google.maps.places.PlacesService(map);
-
-            //service.nearbySearch(request, callback);
-
-            google.maps.event.addListener(map, 'rightclick', function (event) {
-                map.setCenter(event.latLng);
-                clearResults(markers);
-
-                var request = {
-                    location: event.latLng,
-                    radius: 8047,
-                    types: currentTypes
-                };
-                service.nearbySearch(request, callback);
-            });
         }
 
         function callback(results, status) {

@@ -504,20 +504,15 @@
             }, 1250);
 
             $("#within").change(function() {
-                clearResults(markers);
-                
-                if (currentTypes.length > 0) {
-                    request = {
-                        location: center,
-                        radius: oneMileRadius * parseInt($('#within').find(":selected")[0].value),
-                        types: currentTypes
-                    };
-                  
-                    service.nearbySearch(request, callback);
-                }
+                refreshMap();
             });
 
             $("#open").change(function() {
+                refreshMap();
+            });
+
+            // removes markers and adds ones that match filters
+            function refreshMap() {
                 clearResults(markers);
                 
                 if (currentTypes.length > 0) {
@@ -529,7 +524,7 @@
                   
                     service.nearbySearch(request, callback);
                 }
-            });
+            }
         });
 
 //>>>>>>> 20b07c930ea6b1c1a9945ca41d4e9994a580c901

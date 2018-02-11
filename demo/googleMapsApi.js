@@ -24,7 +24,12 @@
 
         function callback(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
+                console.log($('#open')[0].checked);
+                console.log(!results[0].opening_hours.open_now);
                 for (var i = 0; i < results.length; i++) {
+                    if (!results[i].opening_hours.open_now && $('#open')[0].checked) {
+                        continue;
+                    }
                     markers.push(createMarker(results[i]));
                 }
             }
@@ -73,7 +78,7 @@
 
             google.maps.event.addListener(marker, 'click', function () {
                 //debugging
-                console.log(place);
+                console.log(markers)
                 infoContent="<b><a href=\"https://www.google.com/maps/place/"+place.vicinity+"\">"+place.name+"</a></b><br>";
                 placehead=document.getElementById('placename');
                 //console.log(placehead);
@@ -499,6 +504,20 @@
             }, 1250);
 
             $("#within").change(function() {
+                clearResults(markers);
+                
+                if (currentTypes.length > 0) {
+                    request = {
+                        location: center,
+                        radius: oneMileRadius * parseInt($('#within').find(":selected")[0].value),
+                        types: currentTypes
+                    };
+                  
+                    service.nearbySearch(request, callback);
+                }
+            });
+
+            $("#open").change(function() {
                 clearResults(markers);
                 
                 if (currentTypes.length > 0) {

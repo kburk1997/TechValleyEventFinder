@@ -7,7 +7,8 @@
         var typeArray = ['cafe', 'store', 'bank', 'lodging'];
         var currentTypes = [];
         var center = new google.maps.LatLng(42.8035432, -74.0081847);
-        var oneMileRadius = 1609;
+        var oneMileRadius = 1609;       
+        var searchBox;
 
         function initialize() {
             //var center = new google.maps.LatLng(42.8035432, -74.0081847);
@@ -19,7 +20,38 @@
            
             infowindow = new google.maps.InfoWindow();
 
-            service = new google.maps.places.PlacesService(map);
+            service = new google.maps.places.PlacesService(map);          
+        
+            // Setup search bar 
+            var input = document.getElementById('search');
+            searchBox = new google.maps.places.SearchBox(input);        
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+              searchBox.setBounds(map.getBounds());
+            });
+
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                  // For each place, get the icon, name and location.
+                  var bounds = new google.maps.LatLngBounds();
+                  places.forEach(function(place) {
+                    if (!place.geometry) {
+                      console.log("Returned place contains no geometry");
+                      return;
+                    }
+
+                    markers.push(createMarker(place));
+                    map.panTo(place.geometry.location);          
+                });
+
+            }); 
         }
 
         function callback(results, status) {
@@ -31,6 +63,7 @@
                         continue;
                     }
                     markers.push(createMarker(results[i]));
+
                 }
             }
         }
@@ -509,7 +542,9 @@
 
             $("#open").change(function() {
                 refreshMap();
-            });
+            });      
+
+             
 
             // removes markers and adds ones that match filters
             function refreshMap() {

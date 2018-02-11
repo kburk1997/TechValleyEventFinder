@@ -2,17 +2,20 @@
     height: 100%;
     margin: 0px;
     padding: 0px;
+    
 }
 
 table {
     height: 50%;
     width: 100% margin: 0px;
+    margin-top: -100px;
     padding: 0px;
 }
 
 #map {
-    width: 100% !important;
+    width: 98% !important;
     height: 50% !important;
+    margin-right:10px;
 }
 
 

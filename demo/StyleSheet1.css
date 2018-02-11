@@ -235,3 +235,17 @@ body {
         td {
             padding-right: 5%;
         }
+
+        .editclass{
+
+            font-weight:bold;
+            color:yellow;
+        }
+
+
+        .raise{
+            margin-top: -370px;
+            margin-left: 600px;
+            margin-bottom: 125px;
+
+        }

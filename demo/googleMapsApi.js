@@ -4,25 +4,23 @@ var map;
         var service;
         var markers = [];
         var Value = [];
-
+        var typeArray = ['cafe', 'store', 'bank', 'lodging'];
+        var currentTypes = [];
+        var center = new google.maps.LatLng(42.8035432, -74.0081847);
 
         function initialize() {
-            var center = new google.maps.LatLng(42.8035432, -74.0081847);
+            //var center = new google.maps.LatLng(42.8035432, -74.0081847);
             map = new google.maps.Map(document.getElementById('map'), {
                 center: center,
                 zoom: 13
             });
 
-            request = {
-                location: center,
-                radius: 8047,
-                types: ['point_of_interest']
-            };
+           
             infowindow = new google.maps.InfoWindow();
 
             service = new google.maps.places.PlacesService(map);
 
-            service.nearbySearch(request, callback);
+            //service.nearbySearch(request, callback);
 
             google.maps.event.addListener(map, 'rightclick', function (event) {
                 map.setCenter(event.latLng);
@@ -31,7 +29,7 @@ var map;
                 var request = {
                     location: event.latLng,
                     radius: 8047,
-                    types: ['point_of_interest']
+                    types: currentTypes
                 };
                 service.nearbySearch(request, callback);
             });
@@ -215,6 +213,31 @@ var map;
                 markers[m].setMap(null)
             }
         }
+
+        function addResultsOfType(type) {
+            currentTypes.push(type);
+            console.log(currentTypes);
+            request = {
+                location: center,
+                radius: 8047,
+                types: currentTypes
+            };
+
+            service.nearbySearch(request, callback);
+        }
+
+        function removeResultsOfType(type) {
+            currentTypes.splice($.inArray(type, currentTypes),1);
+            console.log(currentTypes);
+            request = {
+                location: center,
+                radius: 8047,
+                types: currentTypes
+            };
+
+            service.nearbySearch(request, callback);
+        }
+
         google.maps.event.addDomListener(window, 'load', initialize);
 //<<<<<<< HEAD
 //=======
@@ -314,7 +337,7 @@ var map;
                                 if (checkbox.checked) {
                                     that.options.checkedItems.push(event.srcElement);
                                     placeholder.nodeValue = "Selected: " + that.options.checkedItems.length + " out of " + $(that.selector).find('input[type="checkbox"]').length;
-                                 
+                                    addResultsOfType(checkbox.labels[0].innerHTML);
 
 
                                 } else {
@@ -323,6 +346,7 @@ var map;
                                         return items.value != $el.data().value;
                                     });
                                     placeholder.nodeValue = "Selected: " + that.options.checkedItems.length + " out of " + $(that.selector).find('input[type="checkbox"]').length;
+                                    //removeResultsOfType(checkbox.labels[0].innerHTML);
                                 }
                                 console.log("data: ", that.options.checkedItems);
                             });

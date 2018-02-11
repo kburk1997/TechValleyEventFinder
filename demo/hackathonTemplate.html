@@ -60,6 +60,18 @@
         <tr></tr>
     </table>
 
+          <!-- Select Basic -->
+            <label class="form-check-label">Community Resources:</label></br>
+            <select onchange="window.open(this.options[this.selectedIndex].value,'new window')" name="website">
+            <option value="" selected="selected">Schenectady Resource List</option>
+            <option value="https://www.cityofschenectady.com">City of Shenectady Website</option>
+            <option value="https://www.schenectadycounty.com">Schenectady County Website</option>
+            <option value="http://www.scpl.org">Schenectady County Public Library</option>
+            <option value="http://sunysccc.edu/">Schenectady Community College</option>
+
+            </select>
+<br/><br/><br/>
+<!-- select end -->
         <input id="search" class="form-control" type="text" placeholder="Plan your perfect day! Search your first destination">
     <div id="map">
     </div>

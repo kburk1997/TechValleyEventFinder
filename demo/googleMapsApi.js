@@ -475,6 +475,15 @@ var map;
                       },]
                     },
                     {
+                      label: 'Travel',
+                      options:[{
+                        value:421,
+                        text:'lodging',
+                        defaultSelected: false,
+                        selected: false
+                      }]
+                    },
+                    {
                         label: 'Other',
                         options: [{
                             value: 555,

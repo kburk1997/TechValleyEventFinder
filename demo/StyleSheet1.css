@@ -1,0 +1,16 @@
+﻿html, body, #map {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+table {
+    height: 50%;
+    width: 100% margin: 0px;
+    padding: 0px;
+}
+
+#map {
+    width: 100% !important;
+    height: 50% !important;
+}

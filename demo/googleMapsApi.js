@@ -86,7 +86,7 @@ var map;
 
             google.maps.event.addListener(marker, 'click', function () {
                 //debugging
-                //console.log(place);
+                console.log(place);
                 infoContent="<b><a href=\"https://www.google.com/maps/place/"+place.vicinity+"\">"+place.name+"</a></b><br>";
                 placehead=document.getElementById('placename');
                 //console.log(placehead);
@@ -226,16 +226,24 @@ var map;
             service.nearbySearch(request, callback);
         }
 
-        function removeResultsOfType(type) {
-            currentTypes.splice($.inArray(type, currentTypes),1);
-            console.log(currentTypes);
-            request = {
+        function removeResultsOfType(types) {
+            
+            currentTypes = [];           
+            clearResults(markers);
+
+            if (types.length > 0) {
+                for (var i in types){
+                    currentTypes.push(types[i].labels[0].innerHTML); 
+                } 
+
+                request = {
                 location: center,
                 radius: 8047,
                 types: currentTypes
             };
-
+          
             service.nearbySearch(request, callback);
+            }                      
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
@@ -341,12 +349,14 @@ var map;
 
 
                                 } else {
+                                  
                                     that.options.checkedItems.pop();
                                     that.options.checkedItems = that.options.checkedItems.filter(function (items, index) {
                                         return items.value != $el.data().value;
                                     });
                                     placeholder.nodeValue = "Selected: " + that.options.checkedItems.length + " out of " + $(that.selector).find('input[type="checkbox"]').length;
-                                    //removeResultsOfType(checkbox.labels[0].innerHTML);
+                                    //console.log(that.options.checkedItems[0].labels[0].innerHTML);
+                                    removeResultsOfType(that.options.checkedItems);
                                 }
                                 console.log("data: ", that.options.checkedItems);
                             });

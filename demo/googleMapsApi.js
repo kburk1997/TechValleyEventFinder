@@ -43,6 +43,39 @@ var map;
             }
         }
 
+        function getGenderNeutralInfo(placeName, infoElem, infoContent){
+          console.log(placeName);
+          var xhr=new XMLHttpRequest;
+          
+          var queryUrl = "https://www.refugerestrooms.org:443/api/v1/restrooms/search.json?query="+encodeURIComponent(placeName);
+          console.log(queryUrl);
+          xhr.open('GET', queryUrl);
+          xhr.send(null);
+          xhr.onreadystatechange=function(){
+            var DONE=4;
+            var OK = 200;
+            if(xhr.readyState === DONE){
+              if(xhr.status === OK){
+                console.log(xhr.responseText);
+                if(xhr.responseText != '[]'){
+                  console.log('found one!');
+                  var obj=JSON.parse(xhr.responseText);
+                  console.log(obj);
+                  console.log(obj[0].id);
+                  infoContent+='<br><a href=\"https://www.refugerestrooms.org/restrooms/';
+                  infoContent+=obj[0].id;
+                  infoContent+='\">This place has a gender neutral restroom!</a>';
+                  infowindow.setContent(infoContent);
+                }
+                
+
+              }
+              else{console.log('error');}
+            }
+          };
+          return [];
+        }
+
         function createMarker(place) {
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
@@ -59,6 +92,7 @@ var map;
                 //console.log(placehead);
                 infoContent+= place.vicinity;
                 infowindow.setContent(infoContent);
+                getGenderNeutralInfo((place.name + ' '+place.vicinity), infowindow, infoContent);
                 infowindow.open(map, this);
             });
 

@@ -1,4 +1,4 @@
-var map;
+        var map;
         var infowindow;
         var request;
         var service;
@@ -7,6 +7,7 @@ var map;
         var typeArray = ['cafe', 'store', 'bank', 'lodging'];
         var currentTypes = [];
         var center = new google.maps.LatLng(42.8035432, -74.0081847);
+        var oneMileRadius = 1609;
 
         function initialize() {
             //var center = new google.maps.LatLng(42.8035432, -74.0081847);
@@ -23,7 +24,12 @@ var map;
 
         function callback(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
+                console.log($('#open')[0].checked);
+                console.log(!results[0].opening_hours.open_now);
                 for (var i = 0; i < results.length; i++) {
+                    if (!results[i].opening_hours.open_now && $('#open')[0].checked) {
+                        continue;
+                    }
                     markers.push(createMarker(results[i]));
                 }
             }
@@ -72,7 +78,7 @@ var map;
 
             google.maps.event.addListener(marker, 'click', function () {
                 //debugging
-                console.log(place);
+                console.log(markers)
                 infoContent="<b><a href=\"https://www.google.com/maps/place/"+place.vicinity+"\">"+place.name+"</a></b><br>";
                 placehead=document.getElementById('placename');
                 //console.log(placehead);
@@ -202,10 +208,10 @@ var map;
 
         function addResultsOfType(type) {
             currentTypes.push(type);
-            console.log(currentTypes);
+            
             request = {
                 location: center,
-                radius: 8047,
+                radius: oneMileRadius * parseInt($('#within').find(":selected")[0].value),
                 types: currentTypes
             };
 
@@ -224,7 +230,7 @@ var map;
 
                 request = {
                 location: center,
-                radius: 8047,
+                radius: oneMileRadius * parseInt($('#within').find(":selected")[0].value),
                 types: currentTypes
             };
           
@@ -496,6 +502,29 @@ var map;
             setTimeout(function () {
                 $(".selectionator").removeClass('opened');
             }, 1250);
+
+            $("#within").change(function() {
+                refreshMap();
+            });
+
+            $("#open").change(function() {
+                refreshMap();
+            });
+
+            // removes markers and adds ones that match filters
+            function refreshMap() {
+                clearResults(markers);
+                
+                if (currentTypes.length > 0) {
+                    request = {
+                        location: center,
+                        radius: oneMileRadius * parseInt($('#within').find(":selected")[0].value),
+                        types: currentTypes
+                    };
+                  
+                    service.nearbySearch(request, callback);
+                }
+            }
         });
 
 //>>>>>>> 20b07c930ea6b1c1a9945ca41d4e9994a580c901

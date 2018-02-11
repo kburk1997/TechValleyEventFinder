@@ -14,7 +14,7 @@ table {
 
 #map {
     width: 98% !important;
-    height: 50% !important;
+    height: 45% !important;
     margin-right:10px;
 }
 
@@ -135,7 +135,7 @@ body {
 
     .selectionator:hover .menu,
     .selectionator.opened .menu {
-        height: 200px;
+        height: 150px;
         opacity: 1;
     }
 

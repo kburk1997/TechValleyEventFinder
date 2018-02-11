@@ -479,12 +479,12 @@
                         label: 'Other',
                         options: [{
                             value: 555,
-                            text: 'linda',
+                            text: 'bank',
                             defaultSelected: false,
                             selected: false
                         }, {
                             value: 333,
-                            text: "mike",
+                            text: "atm",
                             defaultSelected: false,
                             selected: false
                         }]

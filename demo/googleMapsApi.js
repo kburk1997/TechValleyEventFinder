@@ -415,22 +415,66 @@ var map;
                             defaultSelected: true,
                             selected: false
                         }, {
-                            value: 345,
-                            text: 'store',
+                            value: 666,
+                            text: 'restaurant',
                             defaultSelected: false,
                             selected: false
                         }, {
                             value: 111,
-                            text: "bank",
+                            text: "bar",
                             defaultSelected: false,
                             selected: false
                         }, {
                             value: 433,
-                            text: "lodging",
+                            text: "bakery",
                             defaultSelected: false,
                             selected: true
                         }]
                     }, {
+                      label: 'Shopping',
+                      options: [{
+                        value: 420,
+                        text: 'book_store',
+                        defaultSelected: false,
+                        selected: false
+
+                      },{
+                            value: 345,
+                            text: 'store',
+                            defaultSelected: false,
+                            selected: false
+                        },{
+                          value:69,
+                          text: 'shopping_mall',
+                          defaultSelected: false,
+                          selected: false
+                        },{
+                        value: 696,
+                        text: 'shoe_store',
+                        defaultSelected: false,
+                        selected: false
+
+                      },{
+                        value: 690,
+                        text: 'electronics_store',
+                        defaultSelected: false,
+                        selected: false
+
+                      },{
+                        value: 691,
+                        text: 'department_store',
+                        defaultSelected: false,
+                        selected: false
+
+                      },{
+                        value: 697,
+                        text: 'home_goods_store',
+                        defaultSelected: false,
+                        selected: false
+
+                      },]
+                    },
+                    {
                         label: 'Other',
                         options: [{
                             value: 555,

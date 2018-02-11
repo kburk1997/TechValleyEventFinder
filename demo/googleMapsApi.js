@@ -51,7 +51,7 @@ var map;
           
           var queryUrl = "https://www.refugerestrooms.org:443/api/v1/restrooms/search.json?query="+encodeURIComponent(placeName);
           console.log(queryUrl);
-          xhr.open('GET', queryUrl);
+          xhr.open('GET', queryUrl, true);
           xhr.send(null);
           xhr.onreadystatechange=function(){
             var DONE=4;

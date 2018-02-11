@@ -11,13 +11,16 @@
 
 
     <link rel="stylesheet" href="StyleSheet1.css">
+    <title>Tech Valley App</title>
 </head>
+
 <body>
 
     <nav class="navbar fixed-top navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Points of interest</a>
+        <div class = "editclass">
+        <a class="navbar-brand" href="#">Tech Valley Points of interest</a>
 
-
+</div>
 
     </nav>
     <table>
@@ -35,7 +38,7 @@
             </td>
             <td style="padding-right: 10px; padding-top: 80px; width:30%" valign="Top">
                 <div class="form-group">
-    <label for="exampleSelect1">Within</label>
+    <label for="exampleSelect1"><div class = "editclass">Set Within:</div></label>
     <select class="form-control" id="within">
       <option value="1" selected>Walking Distance</option>
       <option value="5">5 miles</option>
@@ -50,7 +53,7 @@
                 <div class="form-group"> 
                     <div class="form-check form-check-inline">
                       <input class="form-control" type="checkbox" id="open" value="option1">
-                      <label class="form-check-label" for="inlineCheckbox1">Open Now</label>
+                      <label class="form-check-label" for="inlineCheckbox1"><div class = "editclass">Open Now</div></label>
                     </div>
                 </div>
             </td>
@@ -60,9 +63,11 @@
         <tr></tr>
     </table>
 
+<div class="form-group  editclass raise" >
           <!-- Select Basic -->
+          <div class= class="form-control" id="within">
             <label class="form-check-label">Community Resources:</label></br>
-            <select onchange="window.open(this.options[this.selectedIndex].value,'new window')" name="website">
+            <select onchange="window.open(this.options[this.selectedIndex].value,'new window')" name="website" id="resources">
             <option value="" selected="selected">Schenectady Resource List</option>
             <option value="https://www.cityofschenectady.com">City of Shenectady Website</option>
             <option value="https://www.schenectadycounty.com">Schenectady County Website</option>
@@ -71,6 +76,8 @@
 
             </select>
 <br/><br/><br/>
+</div>
+</div>
 <!-- select end -->
         <input id="search" class="form-control" type="text" placeholder="Plan your perfect day! Search your first destination">
     <div id="map">
